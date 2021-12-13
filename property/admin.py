@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import Flat, Complaint, Owner
 
 class FlatAdmin(admin.ModelAdmin):
-    search_fields = ['town', 'address', 'owner',]
+    search_fields = ['town', 'address', 'owners__name',]
     readonly_fields = ['created_at']
     list_display = [
         'address',
