@@ -6,7 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Flat(models.Model):
-    new_building = models.NullBooleanField()
+    new_building = models.NullBooleanField(db_index=True)
     description = models.TextField('Текст объявления', blank=True)
     price = models.IntegerField('Цена квартиры', db_index=True)
 
@@ -18,14 +18,17 @@ class Flat(models.Model):
         'Район города, где находится квартира',
         max_length=50,
         blank=True,
-        help_text='Чертаново Южное')
+        help_text='Чертаново Южное',
+        db_index=True)
     address = models.TextField(
         'Адрес квартиры',
-        help_text='ул. Подольских курсантов д.5 кв.4')
+        help_text='ул. Подольских курсантов д.5 кв.4',
+        db_index=True)
     floor = models.CharField(
         'Этаж',
         max_length=3,
-        help_text='Первый этаж, последний этаж, пятый этаж')
+        help_text='Первый этаж, последний этаж, пятый этаж',
+        db_index=True)
 
     rooms_number = models.IntegerField(
         'Количество комнат в квартире',
@@ -69,12 +72,13 @@ class Complaint(models.Model):
 
 
 class Owner(models.Model):
-    name = models.CharField('ФИО владельца', max_length=200)
+    name = models.CharField('ФИО владельца', max_length=200, db_index=True)
     phonenumber = models.CharField('Номер владельца', max_length=20)
     pure_phone = PhoneNumberField(
         'Нормализованный номер владельца', 
         null=True,
-        blank=True
+        blank=True,
+        db_index=True
     )
     flats = models.ManyToManyField(
         Flat,
